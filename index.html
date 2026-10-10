@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CysraOS - A fast, clean Linux desktop</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0d0e10;--panel:#131518;--line:#25282d;--text:#ecebe6;--mute:#8b8f97;--acc:#4f8ff0;--sans:"Space Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;--mono:"JetBrains Mono",ui-monospace,Consolas,monospace;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-behavior:smooth;scroll-padding-top:74px}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.65;font-size:17px;overflow-x:hidden}
+svg{fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:square;stroke-linejoin:miter}
+a{color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--bg);border-bottom:1px solid var(--line)}
+nav{display:flex;align-items:center;justify-content:space-between;height:62px;gap:16px}
+.brand{font-weight:700;font-size:1.25rem;text-decoration:none;letter-spacing:-.01em}
+.brand b{color:var(--acc)}
+.links{display:flex;gap:26px;list-style:none;margin:0;padding:0;font-size:.95rem}
+.links a{color:var(--mute);text-decoration:none}
+.links a:hover{color:var(--text)}
+.links a.d{color:var(--bg);background:var(--acc);padding:7px 14px;font-weight:500}
+.links a.d:hover{color:var(--bg);background:#fff}
+.burger{display:none;background:none;border:1px solid var(--line);color:var(--text);padding:7px;cursor:pointer}
+.burger svg{width:20px;height:20px;display:block}
+.mono{font-family:var(--mono)}
+.lab{font-family:var(--mono);font-size:.78rem;color:var(--acc);letter-spacing:.06em;text-transform:uppercase}
+.hero{padding:84px 0 70px;display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center}
+h1{font-size:clamp(2.6rem,6vw,4.6rem);line-height:1.02;letter-spacing:-.035em;margin:18px 0 22px;font-weight:700}
+h1 em{font-style:normal;color:var(--acc)}
+.lead{color:var(--mute);font-size:1.15rem;max-width:520px;margin:0 0 32px}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:13px 22px;font-family:var(--sans);font-size:1rem;font-weight:500;text-decoration:none;border:1px solid var(--line);color:var(--text);background:none;cursor:pointer}
+.btn:hover{border-color:var(--text)}
+.btn.p{background:var(--acc);color:var(--bg);border-color:var(--acc)}
+.btn.p:hover{background:#fff;border-color:#fff}
+.btn svg{width:18px;height:18px}
+.fine{margin-top:22px;font-family:var(--mono);font-size:.8rem;color:var(--mute)}
+.shotbox{border:1px solid var(--line);background:var(--panel)}
+.tbar{display:flex;align-items:center;gap:7px;padding:10px 14px;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:.75rem;color:var(--mute)}
+.tbar i{width:9px;height:9px;border:1px solid var(--mute);border-radius:50%}
+.tbar span{margin-left:auto}
+.shot{aspect-ratio:16/10;position:relative;background:repeating-linear-gradient(45deg,#15171a,#15171a 12px,#121417 12px,#121417 24px);display:flex;align-items:center;justify-content:center;color:var(--mute);font-family:var(--mono);font-size:.82rem}
+.shot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.ff{margin-top:14px;border:1px solid var(--line);background:var(--panel);padding:16px 18px;font-family:var(--mono);font-size:.82rem;display:grid;grid-template-columns:auto 1fr;gap:3px 18px}
+.ff dt{color:var(--acc);margin:0}
+.ff dd{margin:0;color:var(--text)}
+section{padding:80px 0;border-top:1px solid var(--line)}
+.sh{display:grid;grid-template-columns:200px 1fr;gap:30px;margin-bottom:44px}
+.sh h2{margin:0;font-size:clamp(1.9rem,3.6vw,2.7rem);line-height:1.1;letter-spacing:-.025em;max-width:640px}
+.sh p{grid-column:2;margin:-14px 0 0;color:var(--mute);max-width:560px}
+.about{display:grid;grid-template-columns:200px 1fr 1fr;gap:30px}
+.about p{margin:0 0 16px;color:#c9c8c2}
+.facts{margin:0;padding:0;list-style:none;font-family:var(--mono);font-size:.88rem}
+.facts li{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid var(--line)}
+.facts li:first-child{border-top:1px solid var(--line)}
+.facts span{color:var(--mute)}
+.fg{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);margin-left:230px}
+.f{padding:28px 26px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg);transition:background .2s}
+.f:hover{background:var(--panel)}
+.f:nth-child(3n){border-right:0}
+.f:nth-last-child(-n+3){border-bottom:0}
+.f svg{width:26px;height:26px;color:var(--acc);margin-bottom:18px;display:block}
+.f h3{margin:0 0 8px;font-size:1.1rem}
+.f p{margin:0;color:var(--mute);font-size:.94rem}
+.tw{margin-left:230px;border:1px solid var(--line);overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:520px}
+th,td{text-align:left;padding:16px 22px;border-bottom:1px solid var(--line)}
+tr:last-child td{border-bottom:0}
+th{font-family:var(--mono);font-size:.78rem;font-weight:500;color:var(--mute);text-transform:uppercase;letter-spacing:.06em;background:var(--panel)}
+th.r{color:var(--acc)}
+td:first-child{color:var(--mute);font-family:var(--mono);font-size:.86rem;width:26%}
+.wk{margin-left:230px;display:grid;grid-template-columns:210px 1fr;border:1px solid var(--line)}
+.wt{display:flex;flex-direction:column;border-right:1px solid var(--line);background:var(--panel)}
+.wt button{background:none;border:0;border-bottom:1px solid var(--line);color:var(--mute);text-align:left;padding:15px 18px;font-family:var(--sans);font-size:.96rem;cursor:pointer;border-left:2px solid transparent}
+.wt button:hover{color:var(--text)}
+.wt button.on{color:var(--text);border-left-color:var(--acc);background:var(--bg)}
+.wp{padding:30px 32px;display:none}
+.wp.on{display:block}
+.wp h3{margin:0 0 4px;font-size:1.4rem;letter-spacing:-.01em}
+.wp>p{margin:0 0 22px;color:var(--mute)}
+.st{list-style:none;counter-reset:s;margin:0;padding:0}
+.st li{counter-increment:s;display:grid;grid-template-columns:44px 1fr;padding:14px 0;border-top:1px solid var(--line)}
+.st li::before{content:"0" counter(s);font-family:var(--mono);color:var(--acc);font-size:.9rem;padding-top:2px}
+kbd{font-family:var(--mono);font-size:.85em;background:var(--panel);border:1px solid var(--line);padding:1px 7px}
+.note{margin-top:18px;padding:14px 16px;border:1px dashed var(--line);color:var(--mute);font-size:.93rem}
+.dl{margin-left:230px;border:1px solid var(--line);background:var(--panel);padding:34px}
+.dl h3{margin:0 0 4px;font-size:1.7rem;letter-spacing:-.02em}
+.dl>p{margin:0 0 24px;color:var(--mute)}
+.meta{display:grid;grid-template-columns:repeat(3,1fr);margin-bottom:22px;border:1px solid var(--line)}
+.meta div{padding:14px 18px;border-right:1px solid var(--line);background:var(--bg)}
+.meta div:last-child{border-right:0}
+.meta small{display:block;font-family:var(--mono);font-size:.72rem;color:var(--mute);text-transform:uppercase;letter-spacing:.06em}
+.hash{display:flex;gap:12px;align-items:center;border:1px solid var(--line);background:var(--bg);padding:10px 14px;margin-bottom:24px}
+.hash code{flex:1;font-family:var(--mono);font-size:.76rem;color:var(--mute);word-break:break-all}
+.hash button{font-family:var(--mono);font-size:.76rem;background:none;color:var(--text);border:1px solid var(--line);padding:5px 12px;cursor:pointer}
+.hash button:hover{border-color:var(--acc);color:var(--acc)}
+footer{border-top:1px solid var(--line);padding:34px 0}
+.ft{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;color:var(--mute);font-size:.9rem}
+.so{display:flex;gap:10px}
+.so a{width:40px;height:40px;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--text)}
+.so a:hover{border-color:var(--acc);color:var(--acc)}
+.so svg{width:19px;height:19px}
+@media(max-width:860px){
+.burger{display:block}
+.links{position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:0;background:var(--bg);border-bottom:1px solid var(--line);display:none;padding:8px 24px 16px}
+.links.open{display:flex}
+.links a{display:block;padding:11px 0}
+.links a.d{display:inline-block;margin-top:8px}
+.hero,.about{grid-template-columns:1fr}
+.hero{padding:52px 0}
+.sh{grid-template-columns:1fr;gap:10px}
+.sh p{grid-column:1;margin:0}
+.fg,.tw,.wk,.dl{margin-left:0}
+.fg{grid-template-columns:1fr}
+.f{border-right:0!important;border-bottom:1px solid var(--line)!important}
+.f:last-child{border-bottom:0!important}
+.wk{grid-template-columns:1fr}
+.wt{border-right:0;border-bottom:1px solid var(--line)}
+.meta{grid-template-columns:1fr}
+.meta div{border-right:0;border-bottom:1px solid var(--line)}
+.meta div:last-child{border-bottom:0}
+section{padding:60px 0}
+.wp{padding:24px 20px}
+.dl{padding:24px 20px}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+<symbol id="bolt" viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></symbol>
+<symbol id="mon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13"/><path d="M8 21h8M12 17v4"/></symbol>
+<symbol id="trm" viewBox="0 0 24 24"><path d="m4 17 6-6-6-6M12 19h8"/></symbol>
+<symbol id="cht" viewBox="0 0 24 24"><path d="M4 20V10m6 10V4m6 16v-7m6 7H2"/></symbol>
+<symbol id="lck" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+<symbol id="gr" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3M5 5l2 2m10 10 2 2M5 19l2-2m10-10 2-2"/></symbol>
+<symbol id="dl" viewBox="0 0 24 24"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 20h16"/></symbol>
+<symbol id="gh" viewBox="0 0 24 24"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></symbol>
+<symbol id="usr" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></symbol>
+<symbol id="msg" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+<symbol id="mn" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+</svg>
+
+<header><div class="wrap"><nav>
+<a class="brand" href="#home">Cysra<b>OS</b></a>
+<ul class="links" id="lk">
+<li><a href="#home">Home</a></li>
+<li><a href="#about">About</a></li>
+<li><a href="#features">Features</a></li>
+<li><a href="#requirements">System Requirements</a></li>
+<li><a href="#wiki">Wiki</a></li>
+<li><a class="d" href="#download">Download</a></li>
+</ul>
+<button class="burger" id="bg" aria-label="Menu"><svg><use href="#mn"/></svg></button>
+</nav></div></header>
+
+<main>
+<div class="wrap hero" id="home">
+<div>
+<span class="lab">CysraOS 1.0 / KDE Plasma / x86_64</span>
+<h1>A Linux desktop that gets out of <em>your way.</em></h1>
+<p class="lead">CysraOS is a lightweight distribution with a tuned core and a carefully customized KDE Plasma desktop. It boots fast, stays light on memory and leaves every setting in your hands.</p>
+<div class="btns">
+<a class="btn p" href="#download"><svg><use href="#dl"/></svg>Download CysraOS 1.0</a>
+<a class="btn" href="#features">Explore Features</a>
+</div>
+<p class="fine">Free. Live USB included. Installer: Calamares.</p>
+</div>
+<div>
+<div class="shotbox">
+<div class="tbar"><i></i><i></i><i></i><span>desktop.png</span></div>
+<div class="shot">screenshot.png<img src="screenshot.png" alt="CysraOS desktop screenshot" onerror="this.style.display='none'"></div>
+</div>
+<dl class="ff"><dt>OS</dt><dd>CysraOS 1.0 x86_64</dd><dt>DE</dt><dd>KDE Plasma</dd><dt>Installer</dt><dd>Calamares</dd><dt>Boot</dt><dd>GRUB</dd></dl>
+</div>
+</div>
+
+<section id="about"><div class="wrap about">
+<div class="lab">01 / About</div>
+<div>
+<p>CysraOS started from a simple frustration: most desktops are either heavy or ugly, and rarely both fast and good looking. We wanted something you can install, open and actually enjoy.</p>
+<p>So the base system stays lean, and the Plasma desktop gets the polish: themes, icons and layouts that look good from the first boot, and that you can still change however you like.</p>
+</div>
+<ul class="facts">
+<li><span>Version</span>1.0</li>
+<li><span>Architecture</span>x86_64</li>
+<li><span>Desktop</span>KDE Plasma</li>
+<li><span>Installer</span>Calamares</li>
+<li><span>Image size</span>3.6 GB</li>
+</ul>
+</div></section>
+
+<section id="features"><div class="wrap">
+<div class="sh"><div class="lab">02 / Features</div><h2>What you get out of the box.</h2></div>
+<div class="fg">
+<div class="f"><svg><use href="#bolt"/></svg><h3>Optimized Core</h3><p>A tuned kernel and trimmed services for quick startup and a responsive system.</p></div>
+<div class="f"><svg><use href="#mon"/></svg><h3>KDE Plasma Customizations</h3><p>Custom themes, icons and layouts, ready on first boot.</p></div>
+<div class="f"><svg><use href="#trm"/></svg><h3>System Fetch Tools</h3><p>Preinstalled fetch utilities to check or show off your setup in one command.</p></div>
+<div class="f"><svg><use href="#cht"/></svg><h3>Low Resource Usage</h3><p>Runs well on modest hardware and leaves RAM and CPU to your apps.</p></div>
+<div class="f"><svg><use href="#lck"/></svg><h3>Clean Base System</h3><p>Sensible defaults and no clutter, so the system stays predictable.</p></div>
+<div class="f"><svg><use href="#gr"/></svg><h3>Graphical Installer</h3><p>Calamares takes you from the live session to an installed system.</p></div>
+</div>
+</div></section>
+
+<section id="requirements"><div class="wrap">
+<div class="sh"><div class="lab">03 / Requirements</div><h2>Minimum vs. recommended hardware.</h2></div>
+<div class="tw"><table>
+<tr><th></th><th>Minimum</th><th class="r">Recommended</th></tr>
+<tr><td>CPU</td><td>64-bit dual-core, 1.6 GHz</td><td>64-bit quad-core, 2.5 GHz or better</td></tr>
+<tr><td>RAM</td><td>3 GB</td><td>4 GB or more</td></tr>
+<tr><td>Disk Storage</td><td>20 GB free space</td><td>40 GB SSD</td></tr>
+<tr><td>Display / GPU</td><td>1280x720, OpenGL 2.0 capable GPU</td><td>1920x1080, dedicated or modern integrated GPU</td></tr>
+</table></div>
+</div></section>
+
+<section id="wiki"><div class="wrap">
+<div class="sh"><div class="lab">04 / Wiki</div><h2>Install it. Fix it.</h2></div>
+<div class="wk">
+<div class="wt" id="wt">
+<button class="on" data-p="w1">Installation Guide</button>
+<button data-p="w2">Troubleshooting</button>
+<button data-p="w3">Before You Begin</button>
+</div>
+<div>
+<div class="wp on" id="w1"><h3>Installing CysraOS 1.0</h3><p>Boot from your CysraOS USB drive and follow these steps.</p>
+<ol class="st">
+<li><div>In the GRUB menu, select the first option and wait 1-2 minutes for the live session to load.</div></li>
+<li><div>If Calamares shows an error, close Calamares and open the <kbd>Install CysraOS 1.0</kbd> file on the desktop instead.</div></li>
+<li><div>Wait 1-2 minutes until the Welcome screen appears.</div></li>
+<li><div>Set your keyboard layout and language, then choose your disk partitions and continue with the installer.</div></li>
+</ol></div>
+<div class="wp" id="w2"><h3>Troubleshooting</h3><p>Common installer issues and how to solve them.</p>
+<ol class="st">
+<li><div><b>Calamares fails to start or shows an error.</b> Close it, then double-click <kbd>Install CysraOS 1.0</kbd> on the desktop.</div></li>
+<li><div><b>The Welcome screen takes a while.</b> This is normal. Wait 1-2 minutes before doing anything else.</div></li>
+<li><div><b>Black screen after GRUB.</b> Reboot, pick the first GRUB entry again and give it time to load.</div></li>
+</ol></div>
+<div class="wp" id="w3"><h3>Before You Begin</h3><p>A little preparation makes installation smoother.</p>
+<ol class="st">
+<li><div>Download the ISO and verify its SHA256 checksum.</div></li>
+<li><div>Write the ISO to a USB drive with a tool of your choice.</div></li>
+<li><div>Back up important data. Partitioning can erase existing files.</div></li>
+<li><div>Boot from the USB drive using your firmware's boot menu.</div></li>
+</ol><div class="note">Check the System Requirements section to make sure your hardware is supported.</div></div>
+</div>
+</div>
+</div></section>
+
+<section id="download"><div class="wrap">
+<div class="sh"><div class="lab">05 / Download</div><h2>Get CysraOS 1.0.</h2></div>
+<div class="dl">
+<h3>CysraOS 1.0 ISO</h3>
+<p>Live-bootable installation image with KDE Plasma.</p>
+<div class="meta">
+<div><small>Version</small>1.0</div>
+<div><small>Architecture</small>x86_64</div>
+<div><small>File Size</small>3.6 GB</div>
+</div>
+<div class="hash"><code id="sum">SHA256: FEADBA50FA359E09C4F4D2EF3E1898BFEEEEDDDA3900194830DB4EFA3B5ADA24</code><button id="cp">Copy</button></div>
+<a class="btn p" href="https://drive.usercontent.google.com/download?id=129fw23QRAG1SLKqRJy5DL_in0qZkU9KD&export=download&authuser=0" id="dlb"><svg><use href="https://drive.usercontent.google.com/download?id=129fw23QRAG1SLKqRJy5DL_in0qZkU9KD&export=download&authuser=0"/></svg>Download ISO</a>
+</div>
+</div></section>
+</main>
+
+<footer><div class="wrap ft">
+<span>&copy; 2026 CysraOS. All rights reserved.</span>
+<div class="so">
+<a href="#" aria-label="GitHub"><svg><use href="#gh"/></svg></a>
+<a href="#" aria-label="Community"><svg><use href="#usr"/></svg></a>
+<a href="#" aria-label="Chat"><svg><use href="#msg"/></svg></a>
+</div>
+</div></footer>
+
+<script>
+var lk=document.getElementById('lk');
+document.getElementById('bg').addEventListener('click',function(){lk.classList.toggle('open')});
+lk.addEventListener('click',function(e){if(e.target.tagName==='A')lk.classList.remove('open')});
+var bs=document.querySelectorAll('#wt button');
+bs.forEach(function(b){b.addEventListener('click',function(){
+bs.forEach(function(x){x.classList.remove('on')});
+document.querySelectorAll('.wp').forEach(function(p){p.classList.remove('on')});
+b.classList.add('on');
+document.getElementById(b.dataset.p).classList.add('on')})});
+document.getElementById('cp').addEventListener('click',function(){
+var b=this,v=document.getElementById('sum').textContent.replace('SHA256: ','');
+try{navigator.clipboard.writeText(v)}catch(e){}
+b.textContent='Copied';setTimeout(function(){b.textContent='Copy'},1500)});
+document.getElementById('dlb').addEventListener('click',function(e){e.preventDefault()});
+</script>
+</body>
+</html>
